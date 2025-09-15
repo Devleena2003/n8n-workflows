@@ -1,0 +1,446 @@
+{
+  "name": "Weather report automation",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Location Selector",
+        "formDescription": "Select a unique location from this list",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Select your location",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Chicago"
+                  },
+                  {
+                    "option": "New york"
+                  },
+                  {
+                    "option": "Miami"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        144
+      ],
+      "id": "416041a3-65ee-4bb4-ad59-cdbbf654df9c",
+      "name": "On form submission",
+      "webhookId": "1b1e9d1c-4ecc-4a42-891b-8a6223d738a3"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json['Select your location'] }}",
+                    "rightValue": "Chicago",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "951d2288-9b3c-42d1-ade2-a415f679d07b"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Chicago"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "45962fea-0e41-4699-a0c6-5351abeb854d",
+                    "leftValue": "={{ $json['Select your location'] }}",
+                    "rightValue": "New york",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "New york"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "b47e118b-fa56-4d43-ba0a-11710507d385",
+                    "leftValue": "={{ $json['Select your location'] }}",
+                    "rightValue": "Miami",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Miami"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        224,
+        128
+      ],
+      "id": "0b93be60-5eb7-4653-9c33-8b3765ff1577",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.open-meteo.com/v1/forecast?latitude={{ $json.Latitude }}&longitude={{ $json.Longitude }}&hourly=temperature_2m&temperature_unit=fahrenheit",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        848,
+        160
+      ],
+      "id": "343c66ae-dc54-42bf-beea-904dc1326dfa",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "22e48a43-9e85-472b-9072-6d3e63885dee",
+              "name": "Latitude",
+              "value": "41.88",
+              "type": "string"
+            },
+            {
+              "id": "3fb1b241-013a-4d28-8595-305be32b1843",
+              "name": "Longitude",
+              "value": "-87.63",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        448,
+        -48
+      ],
+      "id": "adf5d262-3bca-440c-ae59-00e73192372d",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "22e48a43-9e85-472b-9072-6d3e63885dee",
+              "name": "Latitude",
+              "value": "40.71",
+              "type": "string"
+            },
+            {
+              "id": "3fb1b241-013a-4d28-8595-305be32b1843",
+              "name": "Longitude",
+              "value": "-74.00",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        496,
+        144
+      ],
+      "id": "1193f7d7-6798-464c-ad13-2ee7b9c71916",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "22e48a43-9e85-472b-9072-6d3e63885dee",
+              "name": "Latitude",
+              "value": "25.80",
+              "type": "string"
+            },
+            {
+              "id": "3fb1b241-013a-4d28-8595-305be32b1843",
+              "name": "Longitude",
+              "value": "80.21",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        448,
+        336
+      ],
+      "id": "3c87178e-bbce-4770-8051-40f3afbb0094",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\n// Input is expected in items[0].json\nconst data = items[0].json;\n\n// Get today's date in YYYY-MM-DD format (UTC)\nconst today = new Date().toISOString().split(\"T\")[0];\n\n// Arrays of time and temps\nconst times = data.hourly.time;\nconst temps = data.hourly.temperature_2m;\n\n// Collect today's temps\nlet todayTemps = [];\nfor (let i = 0; i < times.length; i++) {\n  if (times[i].startsWith(today)) {\n    todayTemps.push(temps[i]);\n  }\n}\n\n// Find high and low\nlet high = Math.max.apply(null, todayTemps);\nlet low = Math.min.apply(null, todayTemps);\n\nreturn [\n  {\n    json: {\n      date: today,\n      high: high,\n      low: low\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1056,
+        160
+      ],
+      "id": "1957c746-baf2-4fcd-a830-f277648aa921",
+      "name": "Finding high and low"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appLnTA6hmWm2ZrQN",
+          "mode": "list",
+          "cachedResultName": "The Weather Data",
+          "cachedResultUrl": "https://airtable.com/appLnTA6hmWm2ZrQN"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblHCQodh9SYwBaRv",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/appLnTA6hmWm2ZrQN/tblHCQodh9SYwBaRv"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Location": "={{ $('On form submission').item.json['Select your location'] }}",
+            "High": "={{ $json.high }}",
+            "Low": "={{ $json.low }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Location",
+              "displayName": "Location",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "High",
+              "displayName": "High",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Low",
+              "displayName": "Low",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Created Time",
+              "displayName": "Created Time",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1264,
+        160
+      ],
+      "id": "20b2d0ee-f0e7-4ec5-9064-a64b32943adf",
+      "name": "Create a record",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "3jebHfr375sRB5nt",
+          "name": "Airtable Personal Access Token account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Finding high and low",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Finding high and low": {
+      "main": [
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "849d492b-0bba-4351-a47e-81e58145cc76",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d6554b8a92ad02dda2b35b9c8280415a345df2927d8239f4d2105812b89d6074"
+  },
+  "id": "H0q4ESzJun4G8WYz",
+  "tags": []
+}
