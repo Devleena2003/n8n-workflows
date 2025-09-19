@@ -63,6 +63,14 @@ Automatically fetches weather data and sends reports to desired channels.
 
 ---
 
+### 7. Social Media Marketing Agent
+
+**File:** `Social_media_automation.json`
+
+![Social Media Automation Workflow](assets/marketing.png)
+
+---
+
 ## How to Use
 
 1. Open your n8n instance (local or cloud).
