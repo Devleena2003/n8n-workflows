@@ -1,4 +1,4 @@
-# n8n Workflows Portfolio
+# n8n Workflows 
 
 This repository contains a collection of n8n automation workflows I have built.  
 Each workflow is exported as a JSON file and can be imported into any n8n instance to explore or run.
